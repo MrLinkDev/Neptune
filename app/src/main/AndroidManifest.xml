@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ru.linkstuff.neptunedemo">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/neptune"
+        android:label="Neptune"
+        android:roundIcon="@drawable/neptune"
+        android:supportsRtl="true">
+
+        <activity android:name="ru.linkstuff.neptunedemo.Main">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
