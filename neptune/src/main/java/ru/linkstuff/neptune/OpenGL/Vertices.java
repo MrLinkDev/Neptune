@@ -14,15 +14,26 @@ import static android.opengl.GLES20.glEnableVertexAttribArray;
 import static android.opengl.GLES20.glVertexAttribPointer;
 
 public class Vertices {
+    public final static int TYPE_COLOR = 0;
+    public final static int TYPE_TEXTURE = 1;
+
     private final int POSITION_COUNT = 2;
+    private final int COLOR_COUNT = 3;
     private final int TEXTURE_COUNT = 2;
-    private final int STRIDE = (POSITION_COUNT + TEXTURE_COUNT) * 4;
+
+    private final int STRIDE;
 
     private IntBuffer vertices;
     private ShortBuffer indices;
     private int[] tempBuffer;
 
-    public Vertices(int maxVertices, int maxIndices){
+    private final int type;
+
+    public Vertices(int maxVertices, int maxIndices, int type) {
+        this.type = type;
+
+        STRIDE = (POSITION_COUNT + (type == TYPE_COLOR ? COLOR_COUNT : TEXTURE_COUNT)) * 4;
+
         tempBuffer = new int[maxVertices * STRIDE / 4];
         vertices = ByteBuffer.allocateDirect(maxVertices * STRIDE).order(ByteOrder.nativeOrder()).asIntBuffer();
 
@@ -37,7 +48,11 @@ public class Vertices {
 
     public void setVertices(float[] vertices, int length){
         this.vertices.clear();
-        for (int i = 0, j = 0; i < length; ++i, ++j) tempBuffer[j] = Float.floatToRawIntBits(vertices[i]);
+
+        for (int i = 0, j = 0; i < length; ++i, ++j) {
+            tempBuffer[j] = Float.floatToRawIntBits(vertices[i]);
+        }
+
         this.vertices.put(tempBuffer, 0, length);
         this.vertices.flip();
     }
@@ -49,15 +64,31 @@ public class Vertices {
     }
 
     public void bind(){
-        vertices.position(0);
+        switch (type){
+            case TYPE_COLOR:
+                vertices.position(0);
 
-        glVertexAttribPointer(ProgramManager.defaultTextureProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getAPositionLocation());
+                glVertexAttribPointer(ProgramManager.defaultColorProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
+                glEnableVertexAttribArray(ProgramManager.defaultColorProgram().getAPositionLocation());
 
-        vertices.position(POSITION_COUNT);
+                vertices.position(POSITION_COUNT);
 
-        glVertexAttribPointer(ProgramManager.defaultTextureProgram().getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getATextureLocation());
+                glVertexAttribPointer(ProgramManager.defaultColorProgram().getAColorLocation(), COLOR_COUNT, GL_FLOAT, true, STRIDE, vertices);
+                glEnableVertexAttribArray(ProgramManager.defaultColorProgram().getAColorLocation());
+                break;
+
+            case TYPE_TEXTURE:
+                vertices.position(0);
+
+                glVertexAttribPointer(ProgramManager.defaultTextureProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
+                glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getAPositionLocation());
+
+                vertices.position(POSITION_COUNT);
+
+                glVertexAttribPointer(ProgramManager.defaultTextureProgram().getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
+                glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getATextureLocation());
+                break;
+        }
     }
 
     public void draw(int numSprites){

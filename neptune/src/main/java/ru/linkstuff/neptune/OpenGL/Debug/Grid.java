@@ -34,7 +34,7 @@ public class Grid {
 
         lineTexture = new Texture(glActivity, "line.png", GLES20.GL_TEXTURE0);
         lineSprite = new Sprite(lineTexture, 0, 0, 4, 4);
-        artist = new Artist(linesX.length + linesY.length);
+        artist = new Artist(linesX.length + linesY.length, Artist.TYPE_TEXTURE);
     }
 
     public void draw(){

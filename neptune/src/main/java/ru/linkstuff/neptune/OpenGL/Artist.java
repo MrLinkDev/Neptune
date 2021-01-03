@@ -1,22 +1,28 @@
 package ru.linkstuff.neptune.OpenGL;
 
 import ru.linkstuff.neptune.Framework.Math.Vector;
+import ru.linkstuff.neptune.OpenGL.Utils.Color;
 import ru.linkstuff.neptune.OpenGL.Utils.SpriteAttributes;
 
 /**
  * Отрисовщик спрайтов
  */
 public class Artist {
+    public final static int TYPE_COLOR = 0;
+    public final static int TYPE_TEXTURE = 1;
+
     private float[] verticesBuffer;
     private Vertices vertices;
+
     private int bufferIndex;
+
     private int numSprites;
     public int maxSprites;
 
-    public Artist(int maxSprites){
+    public Artist(int maxSprites, int type){
         this.maxSprites = maxSprites;
-        this.verticesBuffer = new float[maxSprites * 4 * 4];
-        vertices = new Vertices(maxSprites * 4, maxSprites * 6);
+        this.verticesBuffer = new float[maxSprites * 4 * (type == TYPE_COLOR ? 5 : 4)];
+        vertices = new Vertices(maxSprites * 4, maxSprites * 6, type);
 
         short[] indices = new short[maxSprites * 6];
         int length = indices.length;
@@ -33,6 +39,11 @@ public class Artist {
         vertices.setIndices(indices, 0, indices.length);
     }
 
+    public void begin(){
+        numSprites = 0;
+        bufferIndex = 0;
+    }
+
     public void begin(Texture texture){
         texture.bind();
         numSprites = 0;
@@ -45,6 +56,42 @@ public class Artist {
             vertices.bind();
             vertices.draw(numSprites);
         }
+    }
+
+    public void draw(float x, float y, float width, float height, Color color){
+        float halfWidth = width / 2;
+        float halfHeight = height / 2;
+
+        float x1 = x - halfWidth;
+        float y1 = y - halfHeight;
+        float x2 = x + halfWidth;
+        float y2 = y + halfHeight;
+
+        verticesBuffer[bufferIndex++] = x1;
+        verticesBuffer[bufferIndex++] = y1;
+        verticesBuffer[bufferIndex++] = color.r;
+        verticesBuffer[bufferIndex++] = color.g;
+        verticesBuffer[bufferIndex++] = color.b;
+
+        verticesBuffer[bufferIndex++] = x2;
+        verticesBuffer[bufferIndex++] = y1;
+        verticesBuffer[bufferIndex++] = color.r;
+        verticesBuffer[bufferIndex++] = color.g;
+        verticesBuffer[bufferIndex++] = color.b;
+
+        verticesBuffer[bufferIndex++] = x2;
+        verticesBuffer[bufferIndex++] = y2;
+        verticesBuffer[bufferIndex++] = color.r;
+        verticesBuffer[bufferIndex++] = color.g;
+        verticesBuffer[bufferIndex++] = color.b;
+
+        verticesBuffer[bufferIndex++] = x1;
+        verticesBuffer[bufferIndex++] = y2;
+        verticesBuffer[bufferIndex++] = color.r;
+        verticesBuffer[bufferIndex++] = color.g;
+        verticesBuffer[bufferIndex++] = color.b;
+
+        numSprites++;
     }
 
     public void draw(float x, float y, float width, float height, Sprite sprite){

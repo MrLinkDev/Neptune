@@ -47,6 +47,10 @@ public class Program {
         return GLES20.glGetAttribLocation(programId, "a_Position");
     }
 
+    public int getAColorLocation() {
+        return GLES20.glGetAttribLocation(programId, "a_Color");
+    }
+
     public int getATextureLocation() {
         return GLES20.glGetAttribLocation(programId, "a_Texture");
     }
