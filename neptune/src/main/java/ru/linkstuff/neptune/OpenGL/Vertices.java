@@ -24,10 +24,7 @@ public class Vertices {
 
     public Vertices(int maxVertices, int maxIndices){
         tempBuffer = new int[maxVertices * STRIDE / 4];
-        vertices = ByteBuffer
-                .allocateDirect(maxVertices * STRIDE)
-                .order(ByteOrder.nativeOrder())
-                .asIntBuffer();
+        vertices = ByteBuffer.allocateDirect(maxVertices * STRIDE).order(ByteOrder.nativeOrder()).asIntBuffer();
 
         if (maxIndices > 0){
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(maxIndices * Short.SIZE / 8);
@@ -54,13 +51,13 @@ public class Vertices {
     public void bind(){
         vertices.position(0);
 
-        glVertexAttribPointer(Shader.getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(Shader.getAPositionLocation());
+        glVertexAttribPointer(ProgramManager.defaultProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
+        glEnableVertexAttribArray(ProgramManager.defaultProgram().getAPositionLocation());
 
         vertices.position(POSITION_COUNT);
 
-        glVertexAttribPointer(Shader.getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(Shader.getATextureLocation());
+        glVertexAttribPointer(ProgramManager.defaultProgram().getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
+        glEnableVertexAttribArray(ProgramManager.defaultProgram().getATextureLocation());
     }
 
     public void draw(int numSprites){

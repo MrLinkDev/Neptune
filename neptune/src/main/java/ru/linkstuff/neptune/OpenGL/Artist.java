@@ -3,6 +3,9 @@ package ru.linkstuff.neptune.OpenGL;
 import ru.linkstuff.neptune.Framework.Math.Vector;
 import ru.linkstuff.neptune.OpenGL.Utils.SpriteAttributes;
 
+/**
+ * Отрисовщик спрайтов
+ */
 public class Artist {
     private float[] verticesBuffer;
     private Vertices vertices;

@@ -44,8 +44,6 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
     GLSurfaceView glView;
     GLGraphics glGraphics;
 
-    public Shader shader;
-
     Audio audio;
     Input input;
     FileIO fileIO;
@@ -61,8 +59,8 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -79,6 +77,7 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
         glView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
 
         setContentView(glView);
+
         glGraphics = new GLGraphics(glView);
 
         fileIO = new FileIO(getAssets());
@@ -112,10 +111,14 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         synchronized (stateChanged){
-            if (state == GLGameState.Initialized) scene = getStartScene();
-            state = GLGameState.Running;
-            if (scene != null) scene.resume();
-            startTime = System.nanoTime();
+            if (state == GLGameState.Initialized) {
+                scene = getStartScene();
+                state = GLGameState.Running;
+
+                if (scene != null) scene.resume();
+
+                startTime = System.nanoTime();
+            }
         }
     }
 

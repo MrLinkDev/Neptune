@@ -6,7 +6,7 @@ import android.opengl.GLSurfaceView;
 import ru.linkstuff.neptune.Framework.Graphics;
 
 public class GLGraphics {
-    private GLSurfaceView glView;
+    private final GLSurfaceView glView;
     private GLES20 gl;
 
     GLGraphics(GLSurfaceView glView){

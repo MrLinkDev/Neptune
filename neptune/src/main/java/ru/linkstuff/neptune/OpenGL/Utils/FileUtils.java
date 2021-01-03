@@ -12,7 +12,7 @@ public class FileUtils {
     public static String readTextFromRaw(Context context, int resourceId){
         StringBuilder stringBuilder = new StringBuilder();
 
-        try{
+        try {
             BufferedReader bufferedReader = null;
             try {
                 InputStream inputStream = context.getResources().openRawResource(resourceId);

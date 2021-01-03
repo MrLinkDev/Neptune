@@ -8,15 +8,54 @@ import ru.linkstuff.neptune.R;
 
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
 import static android.opengl.GLES20.GL_VERTEX_SHADER;
-import static android.opengl.GLES20.glGetAttribLocation;
-import static android.opengl.GLES20.glGetUniformLocation;
-import static android.opengl.GLES20.glUseProgram;
 
 public class Shader {
-    public static int DEFAULT_VERTEX_SHADER = R.raw.vertex_shader;
-    public static int DEFAULT_FRAGMENT_SHADER = R.raw.fragment_shader;
+    public final static int DEFAULT_VERTEX_SHADER = R.raw.vertex_shader;
+    public final static int DEFAULT_FRAGMENT_SHADER = R.raw.fragment_shader;
 
-    private static int aPositionLocation;
+    private int vertexShaderId;
+    private int fragmentShaderId;
+
+    public Shader(Context context) {
+        vertexShaderId = createShader(context, GL_VERTEX_SHADER, DEFAULT_VERTEX_SHADER);
+        fragmentShaderId = createShader(context, GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER);
+    }
+
+    public Shader(Context context, int vertexShader, int fragmentShader) {
+        vertexShaderId = createShader(context, GL_VERTEX_SHADER, vertexShader);
+        fragmentShaderId = createShader(context, GL_FRAGMENT_SHADER, fragmentShader);
+    }
+
+    private int createShader(Context context, int type, int shaderRawId) {
+        String shaderSource = FileUtils.readTextFromRaw(context, shaderRawId);
+
+        final int shaderId = GLES20.glCreateShader(type);
+        if (shaderId == 0) return 0;
+
+        GLES20.glShaderSource(shaderId, shaderSource);
+        GLES20.glCompileShader(shaderId);
+
+        final int[] compileStatus = new int[1];
+
+        GLES20.glGetShaderiv(shaderId, GLES20.GL_COMPILE_STATUS, compileStatus, 0);
+
+        if (compileStatus[0] == 0){
+            GLES20.glDeleteShader(shaderId);
+            return 0;
+        }
+
+        return shaderId;
+    }
+
+    public int getVertexShaderId() {
+        return vertexShaderId;
+    }
+
+    public int getFragmentShaderId() {
+        return fragmentShaderId;
+    }
+
+    /**private static int aPositionLocation;
     private static int aTextureLocation;
     private static int uTextureUnitLocation;
     private static int uMatrixLocation;
@@ -33,7 +72,7 @@ public class Shader {
         getLocations();
     }
 
-    private void createProgram(int vertexShaderId, int fragmentShaderId){
+    private void createProgram(int vertexShaderId, int fragmentShaderId) {
         programId = GLES20.glCreateProgram();
 
         if (programId != 0){
@@ -86,5 +125,5 @@ public class Shader {
 
     public static int getUMatrixLocation(){
         return uMatrixLocation;
-    }
+    }*/
 }
