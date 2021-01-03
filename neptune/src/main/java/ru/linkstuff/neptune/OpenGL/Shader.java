@@ -10,15 +10,29 @@ import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
 import static android.opengl.GLES20.GL_VERTEX_SHADER;
 
 public class Shader {
-    public final static int DEFAULT_VERTEX_SHADER = R.raw.vertex_shader;
-    public final static int DEFAULT_FRAGMENT_SHADER = R.raw.fragment_shader;
+    public final static int DEFAULT_VERTEX_COLOR_SHADER = R.raw.vertex_color_shader;
+    public final static int DEFAULT_FRAGMENT_COLOR_SHADER = R.raw.fragment_color_shader;
+
+    public final static int DEFAULT_VERTEX_TEXTURE_SHADER = R.raw.vertex_texture_shader;
+    public final static int DEFAULT_FRAGMENT_TEXTURE_SHADER = R.raw.fragment_texture_shader;
+
+    public final static int SHADER_TYPE_COLOR = 0;
+    public final static int SHADER_TYPE_TEXTURE = 1;
 
     private int vertexShaderId;
     private int fragmentShaderId;
 
-    public Shader(Context context) {
-        vertexShaderId = createShader(context, GL_VERTEX_SHADER, DEFAULT_VERTEX_SHADER);
-        fragmentShaderId = createShader(context, GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_SHADER);
+    public Shader(Context context, int shaderType) {
+        switch (shaderType){
+            case SHADER_TYPE_COLOR:
+                vertexShaderId = createShader(context, GL_VERTEX_SHADER, DEFAULT_VERTEX_COLOR_SHADER);
+                fragmentShaderId = createShader(context, GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_COLOR_SHADER);
+                break;
+            case SHADER_TYPE_TEXTURE:
+                vertexShaderId = createShader(context, GL_VERTEX_SHADER, DEFAULT_VERTEX_TEXTURE_SHADER);
+                fragmentShaderId = createShader(context, GL_FRAGMENT_SHADER, DEFAULT_FRAGMENT_TEXTURE_SHADER);
+                break;
+        }
     }
 
     public Shader(Context context, int vertexShader, int fragmentShader) {

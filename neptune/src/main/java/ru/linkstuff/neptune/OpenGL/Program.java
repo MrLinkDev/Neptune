@@ -8,8 +8,8 @@ public class Program {
 
     private int programId;
 
-    public Program(Context context) {
-        shader = new Shader(context);
+    public Program(Context context, int shaderType) {
+        shader = new Shader(context, shaderType);
 
         createProgram();
     }
@@ -32,7 +32,7 @@ public class Program {
         GLES20.glUseProgram(programId);
     }
 
-    private void attachShader(){
+    private void attachShader() {
         GLES20.glAttachShader(programId, shader.getVertexShaderId());
         GLES20.glAttachShader(programId, shader.getFragmentShaderId());
 
@@ -41,12 +41,6 @@ public class Program {
         final int[] linkStatus = new int[1];
         GLES20.glGetProgramiv(programId, GLES20.GL_LINK_STATUS, linkStatus, 0);
         if (linkStatus[0] == 0) GLES20.glDeleteProgram(programId);
-    }
-
-    public void setShader(Shader shader){
-        this.shader = shader;
-
-        attachShader();
     }
 
     public int getAPositionLocation() {

@@ -11,11 +11,12 @@ public class ProgramManager {
     public static void create(Context context) {
         programs = new ArrayList<>();
 
-        createDefaultProgram(context);
+        createDefaultPrograms(context);
     }
 
-    private static void createDefaultProgram(Context context) {
-        programs.add(new Program(context));
+    private static void createDefaultPrograms(Context context) {
+        programs.add(new Program(context, Shader.SHADER_TYPE_COLOR));
+        programs.add(new Program(context, Shader.SHADER_TYPE_TEXTURE));
     }
 
     public static int createProgram(Context context, int vertexShader, int fragmentShader) {
@@ -23,8 +24,12 @@ public class ProgramManager {
         return programs.size() - 1;
     }
 
-    public static Program defaultProgram() {
+    public static Program defaultColorProgram() {
         return programs.get(0);
+    }
+
+    public static Program defaultTextureProgram() {
+        return programs.get(1);
     }
 
     public static Program program(int index) {

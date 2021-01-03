@@ -16,13 +16,15 @@ public class SceneMenu extends GLScene {
     Camera camera;
     Grid grid;
 
+    final int programIndex;
+
     public SceneMenu(Game game) {
         super(game);
 
         camera = new Camera(width, height);
         grid = new Grid(0, 0, width, height, 9, 16, glActivity);
 
-        ProgramManager.createProgram(glActivity.getApplicationContext(), Shader.DEFAULT_VERTEX_SHADER, R.raw.fragment_all_purple_shader);
+        programIndex = ProgramManager.createProgram(glActivity.getApplicationContext(), Shader.DEFAULT_VERTEX_TEXTURE_SHADER, R.raw.fragment_all_purple_shader);
     }
 
     @Override
@@ -32,11 +34,11 @@ public class SceneMenu extends GLScene {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for (Input.TouchEvent event : touchEvents){
             if (event.type == Input.TouchEvent.TOUCH_DOWN){
-                ProgramManager.program(1).use();
+                ProgramManager.program(programIndex).use();
             }
 
             if (event.type == Input.TouchEvent.TOUCH_UP){
-                ProgramManager.defaultProgram().use();
+                ProgramManager.defaultTextureProgram().use();
             }
         }
     }

@@ -63,7 +63,7 @@ public class Camera {
 
     public void setCamera() {
         Matrix.multiplyMM(mMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
-        glUniformMatrix4fv(ProgramManager.defaultProgram().getUMatrixLocation(), 1, false, mMatrix, 0);
+        glUniformMatrix4fv(ProgramManager.defaultTextureProgram().getUMatrixLocation(), 1, false, mMatrix, 0);
     }
 
     public float getEyeX() {

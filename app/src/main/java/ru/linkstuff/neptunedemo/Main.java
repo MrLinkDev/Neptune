@@ -15,7 +15,7 @@ public class Main extends GLActivity {
     @Override
     public Scene getStartScene() {
         ProgramManager.create(getApplicationContext());
-        ProgramManager.defaultProgram().use();
+        ProgramManager.defaultTextureProgram().use();
 
         return new SceneMenu(this);
     }

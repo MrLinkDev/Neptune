@@ -51,13 +51,13 @@ public class Vertices {
     public void bind(){
         vertices.position(0);
 
-        glVertexAttribPointer(ProgramManager.defaultProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(ProgramManager.defaultProgram().getAPositionLocation());
+        glVertexAttribPointer(ProgramManager.defaultTextureProgram().getAPositionLocation(), POSITION_COUNT, GL_FLOAT, true, STRIDE, vertices);
+        glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getAPositionLocation());
 
         vertices.position(POSITION_COUNT);
 
-        glVertexAttribPointer(ProgramManager.defaultProgram().getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
-        glEnableVertexAttribArray(ProgramManager.defaultProgram().getATextureLocation());
+        glVertexAttribPointer(ProgramManager.defaultTextureProgram().getATextureLocation(), TEXTURE_COUNT, GL_FLOAT, true, STRIDE, vertices);
+        glEnableVertexAttribArray(ProgramManager.defaultTextureProgram().getATextureLocation());
     }
 
     public void draw(int numSprites){
