@@ -1,5 +1,6 @@
 package ru.linkstuff.neptune.OpenGL;
 
+import androidx.annotation.Nullable;
 import ru.linkstuff.neptune.Framework.Math.Vector;
 import ru.linkstuff.neptune.OpenGL.Utils.Color;
 import ru.linkstuff.neptune.OpenGL.Utils.SpriteAttributes;
@@ -23,6 +24,26 @@ public class Artist {
         this.maxSprites = maxSprites;
         this.verticesBuffer = new float[maxSprites * 4 * (type == TYPE_COLOR ? 5 : 4)];
         vertices = new Vertices(maxSprites * 4, maxSprites * 6, type);
+
+        short[] indices = new short[maxSprites * 6];
+        int length = indices.length;
+
+        short j = 0;
+        for (int i = 0; i < length; i += 6, j += 4){
+            indices[i] = j;
+            indices[i + 1] = (short)(j + 1);
+            indices[i + 2] = (short)(j + 2);
+            indices[i + 3] = (short)(j + 2);
+            indices[i + 4] = (short)(j + 3);
+            indices[i + 5] = j;
+        }
+        vertices.setIndices(indices, 0, indices.length);
+    }
+
+    public Artist(int maxSprites){
+        this.maxSprites = maxSprites;
+        this.verticesBuffer = new float[maxSprites * 4 * 4];
+        vertices = new Vertices(maxSprites * 4, maxSprites * 6, TYPE_TEXTURE);
 
         short[] indices = new short[maxSprites * 6];
         int length = indices.length;

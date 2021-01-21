@@ -7,12 +7,14 @@ import java.util.List;
 import ru.linkstuff.neptune.Framework.Game;
 import ru.linkstuff.neptune.Framework.Input;
 import ru.linkstuff.neptune.OpenGL.Camera;
+import ru.linkstuff.neptune.OpenGL.Debug.FPS;
 import ru.linkstuff.neptune.OpenGL.Debug.Grid;
 import ru.linkstuff.neptune.OpenGL.GLScene;
 
 public class SceneMenu extends GLScene {
     Camera camera;
     Grid grid;
+    FPS fps;
 
     boolean pressed = false;
 
@@ -22,7 +24,7 @@ public class SceneMenu extends GLScene {
         camera = new Camera(width, height);
         grid = new Grid(0, 0, width, height, 9, 16, glActivity);
 
-
+        fps = new FPS(width, height, FPS.POSITION_TOP_LEFT, false, glActivity);
     }
 
     @Override
@@ -50,6 +52,8 @@ public class SceneMenu extends GLScene {
         camera.setCamera();
 
         grid.draw();
+
+        fps.draw(deltaTime);
     }
 
     @Override

@@ -11,10 +11,10 @@ public class Grid {
     Line[] linesX;
     Line[] linesY;
 
-    Artist artist;
-
     Texture lineTexture;
     Sprite lineSprite;
+
+    Artist artist;
 
     public Grid(float x, float y, int width, int height, float uWidth, float uHeight, GLActivity glActivity){
         float delta = width / uWidth;

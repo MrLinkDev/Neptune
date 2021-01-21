@@ -72,7 +72,7 @@ public class Texture {
     public void bind(){
         GLES20.glActiveTexture(slot);
         GLES20.glBindTexture(GL_TEXTURE_2D, id);
-        GLES20.glUniform1f(ProgramManager.defaultTextureProgram().getUTextureUnitLocation(), slot - GLES20.GL_TEXTURE0);
+        GLES20.glUniform1i(ProgramManager.defaultTextureProgram().getUTextureUnitLocation(), slot - GLES20.GL_TEXTURE0);
     }
 
     public void reload(GLActivity glActivity){
