@@ -22,9 +22,9 @@ public class SceneMenu extends GLScene {
         super(game);
 
         camera = new Camera(width, height);
-        grid = new Grid(0, 0, width, height, 9, 16, glActivity);
+        grid = new Grid(0, 0, width, height, 9, 16);
 
-        fps = new FPS(width, height, FPS.POSITION_TOP_LEFT, false, glActivity);
+        fps = new FPS(width, height, FPS.POSITION_TOP_LEFT, false);
     }
 
     @Override

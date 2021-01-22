@@ -5,6 +5,7 @@ import ru.linkstuff.neptune.Framework.Scene;
 import ru.linkstuff.neptune.OpenGL.GLActivity;
 
 import ru.linkstuff.neptune.OpenGL.ProgramManager;
+import ru.linkstuff.neptune.OpenGL.TextureManager;
 
 public class Main extends GLActivity {
     @Override
@@ -14,9 +15,6 @@ public class Main extends GLActivity {
 
     @Override
     public Scene getStartScene() {
-        ProgramManager.create(getApplicationContext());
-        ProgramManager.defaultTextureProgram().use();
-
         return new SceneMenu(this);
     }
 }

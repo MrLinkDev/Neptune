@@ -95,6 +95,7 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
                 state = GLGameState.Resumed;
                 stateChanged.notifyAll();
             }
+
         }
 
         glView.onResume();
@@ -109,6 +110,11 @@ public abstract class GLActivity extends Activity implements Game, GLSurfaceView
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        ProgramManager.create(getApplicationContext());
+        ProgramManager.defaultTextureProgram().use();
+
+        TextureManager.loadDebugTextures(this);
 
         synchronized (stateChanged){
             if (state == GLGameState.Initialized) {

@@ -9,17 +9,17 @@ public class Camera {
     private float[] mViewMatrix = new float[16];
     private float[] mMatrix = new float[16];
 
-    // точка положения камеры
+    // Точка положения камеры
     private float eyeX;
     private float eyeY;
     private float eyeZ;
 
-    // точка направления камеры
+    // Точка направления камеры
     private float centerX;
     private float centerY;
     private float centerZ;
 
-    // up-вектор
+    // Up-вектор
     private float upX;
     private float upY;
     private float upZ;

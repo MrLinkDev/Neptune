@@ -1,12 +1,10 @@
 package ru.linkstuff.neptune.OpenGL.Debug;
 
-import android.opengl.GLES20;
 import android.util.Log;
 
 import ru.linkstuff.neptune.OpenGL.Artist;
-import ru.linkstuff.neptune.OpenGL.GLActivity;
 import ru.linkstuff.neptune.OpenGL.Sprite;
-import ru.linkstuff.neptune.OpenGL.Texture;
+import ru.linkstuff.neptune.OpenGL.TextureManager;
 
 public class FPS {
     public static final int POSITION_TOP_LEFT = 0;
@@ -19,7 +17,6 @@ public class FPS {
 
     private final int TEXT_WIDTH = 16;
 
-    private Texture fontTexture;
     private Sprite[] font = new Sprite[12];
 
     private Artist artist;
@@ -35,8 +32,8 @@ public class FPS {
 
     private boolean withText;
 
-    public FPS(float screenWidth, float screenHeight, int position, boolean withText, GLActivity glActivity){
-        loadTexture(glActivity);
+    public FPS(float screenWidth, float screenHeight, int position, boolean withText){
+        loadTexture();
         artist = new Artist(3);
 
         if (screenHeight > screenWidth) multiplier = screenWidth * 0.02f / SPRITE_WIDTH;
@@ -81,7 +78,7 @@ public class FPS {
             Log.d("FPS", lastCount + "");
         }
 
-        artist.begin(fontTexture);
+        artist.begin(TextureManager.getDebug());
         if (lastCount < 10){
             artist.draw(drawX, drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[0]);
             artist.draw(drawX + (SPRITE_WIDTH * multiplier), drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[lastCount]);
@@ -93,20 +90,18 @@ public class FPS {
         artist.end();
     }
 
-    private void loadTexture(GLActivity glActivity){
-        fontTexture = new Texture(glActivity, "debug.png", GLES20.GL_TEXTURE1);
-
-        font[0] = new Sprite(fontTexture, 0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[1] = new Sprite(fontTexture, 5, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[2] = new Sprite(fontTexture, 10, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[3] = new Sprite(fontTexture, 16, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[4] = new Sprite(fontTexture, 22, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[5] = new Sprite(fontTexture, 0, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[6] = new Sprite(fontTexture, 6, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[7] = new Sprite(fontTexture, 12, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[8] = new Sprite(fontTexture, 18, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[9] = new Sprite(fontTexture, 24, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[10] = new Sprite(fontTexture, 0, 24, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[11] = new Sprite(fontTexture, 0, 16, TEXT_WIDTH, SPRITE_HEIGHT);
+    private void loadTexture(){
+        font[0] = new Sprite(TextureManager.getDebug(), 0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[1] = new Sprite(TextureManager.getDebug(), 5, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[2] = new Sprite(TextureManager.getDebug(), 10, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[3] = new Sprite(TextureManager.getDebug(), 16, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[4] = new Sprite(TextureManager.getDebug(), 22, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[5] = new Sprite(TextureManager.getDebug(), 0, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[6] = new Sprite(TextureManager.getDebug(), 6, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[7] = new Sprite(TextureManager.getDebug(), 12, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[8] = new Sprite(TextureManager.getDebug(), 18, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[9] = new Sprite(TextureManager.getDebug(), 24, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[10] = new Sprite(TextureManager.getDebug(), 0, 24, SPRITE_WIDTH, SPRITE_HEIGHT);
+        font[11] = new Sprite(TextureManager.getDebug(), 0, 16, TEXT_WIDTH, SPRITE_HEIGHT);
     }
 }
