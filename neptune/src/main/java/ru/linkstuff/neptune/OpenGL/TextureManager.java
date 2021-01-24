@@ -1,12 +1,12 @@
 package ru.linkstuff.neptune.OpenGL;
 
 import android.opengl.GLES20;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TextureManager {
-    //TODO: Сделать менеджер текстур, чтобы проще было управлять загрузкой и использованием текстур
     private static final String DEBUG_TEXTURE_FILENAME = "debug.png";
     private static final int MAX_TEXTURE_SLOT = 31;
 
@@ -24,12 +24,13 @@ public class TextureManager {
      * Загружает запрашиваемую текстуру в массив текстур, готовых для работы
      * @param glActivity
      * @param filename имя файла текстуры
+     * @return Слот загруженной текстуры
      */
-    public static void loadTexture(GLActivity glActivity, String filename){
-        if (slot == MAX_TEXTURE_SLOT) return;
-
+    public static int loadTexture(GLActivity glActivity, String filename){
+        if (slot == MAX_TEXTURE_SLOT) return -1;
         textureList.add(new Texture(glActivity, filename, GLES20.GL_TEXTURE0 + slot));
-        ++slot;
+
+        return slot++;
     }
 
     /**

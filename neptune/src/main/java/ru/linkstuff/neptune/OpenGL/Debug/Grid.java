@@ -6,12 +6,12 @@ import ru.linkstuff.neptune.OpenGL.Sprite;
 import ru.linkstuff.neptune.OpenGL.TextureManager;
 
 public class Grid {
-    Line[] linesX;
-    Line[] linesY;
+    private final Line[] linesX;
+    private final Line[] linesY;
 
-    Sprite lineSprite;
+    private final Sprite lineSprite;
 
-    Artist artist;
+    private final Artist artist;
     //Fixme: Поправить создание сетки в ландшафтном решиме
     public Grid(float x, float y, int width, int height, float uWidth, float uHeight){
         float delta = width / uWidth;
@@ -24,10 +24,10 @@ public class Grid {
         linesY = new Line[(int) (height / delta) + 1];
 
         for (int i = 0; i < linesX.length; ++i)
-            linesX[i] = new Line(startX + i * delta, y, 1, height);
+            linesX[i] = new Line(startX + i * delta, y, 2, height);
 
         for (int i = 0; i < linesY.length; ++i)
-            linesY[i] = new Line(x, startY + i * delta, width, 1);
+            linesY[i] = new Line(x, startY + i * delta, width, 2);
 
         lineSprite = new Sprite(TextureManager.getDebug(), 31, 31, 1, 1);
         artist = new Artist(linesX.length + linesY.length, Artist.TYPE_TEXTURE);

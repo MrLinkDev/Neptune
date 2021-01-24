@@ -6,20 +6,18 @@ import ru.linkstuff.neptune.OpenGL.Artist;
 import ru.linkstuff.neptune.OpenGL.Sprite;
 import ru.linkstuff.neptune.OpenGL.TextureManager;
 
+import static ru.linkstuff.neptune.Neptune.DEBUG_FPS_LABEL_WIDTH;
+import static ru.linkstuff.neptune.Neptune.DEBUG_SPRITE_HEIGHT;
+import static ru.linkstuff.neptune.Neptune.DEBUG_SPRITE_WIDTH;
+import static ru.linkstuff.neptune.Neptune.FPS_POSITION_BOTTOM_LEFT;
+import static ru.linkstuff.neptune.Neptune.FPS_POSITION_BOTTOM_RIGHT;
+import static ru.linkstuff.neptune.Neptune.FPS_POSITION_TOP_LEFT;
+import static ru.linkstuff.neptune.Neptune.FPS_POSITION_TOP_RIGHT;
+
 public class FPS {
-    public static final int POSITION_TOP_LEFT = 0;
-    public static final int POSITION_TOP_RIGHT = 1;
-    public static final int POSITION_BOTTOM_LEFT = 2;
-    public static final int POSITION_BOTTOM_RIGHT = 3;
+    private final Sprite[] font = new Sprite[12];
 
-    private final int SPRITE_WIDTH = 6;
-    private final int SPRITE_HEIGHT = 8;
-
-    private final int TEXT_WIDTH = 16;
-
-    private Sprite[] font = new Sprite[12];
-
-    private Artist artist;
+    private final Artist artist;
 
     private float time = 0f;
     private int count = 0;
@@ -28,38 +26,38 @@ public class FPS {
     private float drawX;
     private float drawY;
 
-    private float multiplier;
+    private final float multiplier;
 
-    private boolean withText;
+    private final boolean withText;
 
     public FPS(float screenWidth, float screenHeight, int position, boolean withText){
-        loadTexture();
+        loadSprites();
         artist = new Artist(3);
 
-        if (screenHeight > screenWidth) multiplier = screenWidth * 0.02f / SPRITE_WIDTH;
-        else multiplier = screenHeight * 0.02f / SPRITE_HEIGHT;
+        if (screenHeight > screenWidth) multiplier = screenWidth * 0.02f / DEBUG_SPRITE_WIDTH;
+        else multiplier = screenHeight * 0.02f / DEBUG_SPRITE_HEIGHT;
 
         switch (position){
-            case POSITION_TOP_LEFT:
-                drawX = (-screenWidth + SPRITE_WIDTH * multiplier) / 2;
-                drawY = (screenHeight - SPRITE_HEIGHT * multiplier) / 2;
+            case FPS_POSITION_TOP_LEFT:
+                drawX = (-screenWidth + DEBUG_SPRITE_WIDTH * multiplier) / 2;
+                drawY = (screenHeight - DEBUG_SPRITE_HEIGHT * multiplier) / 2;
                 break;
 
-            case POSITION_TOP_RIGHT:
-                if (withText) drawX = (screenWidth / 2) - TEXT_WIDTH * multiplier - 1.5f * SPRITE_WIDTH * multiplier;
-                else drawX = (screenWidth / 2) - 1.5f * SPRITE_WIDTH * multiplier;
-                drawY = (screenHeight - SPRITE_HEIGHT * multiplier) / 2;
+            case FPS_POSITION_TOP_RIGHT:
+                if (withText) drawX = (screenWidth / 2) - DEBUG_FPS_LABEL_WIDTH * multiplier - 1.5f * DEBUG_SPRITE_WIDTH * multiplier;
+                else drawX = (screenWidth / 2) - 1.5f * DEBUG_SPRITE_WIDTH * multiplier;
+                drawY = (screenHeight - DEBUG_SPRITE_HEIGHT * multiplier) / 2;
                 break;
 
-            case POSITION_BOTTOM_LEFT:
-                drawX = (-screenWidth + SPRITE_WIDTH * multiplier) / 2;
-                drawY = (-screenHeight + SPRITE_HEIGHT * multiplier) / 2;
+            case FPS_POSITION_BOTTOM_LEFT:
+                drawX = (-screenWidth + DEBUG_SPRITE_WIDTH * multiplier) / 2;
+                drawY = (-screenHeight + DEBUG_SPRITE_HEIGHT * multiplier) / 2;
                 break;
 
-            case POSITION_BOTTOM_RIGHT:
-                if (withText) drawX = (screenWidth / 2) - TEXT_WIDTH * multiplier - 1.5f * SPRITE_WIDTH * multiplier;
-                else drawX = (screenWidth / 2) - 1.5f * SPRITE_WIDTH * multiplier;
-                drawY = (-screenHeight + SPRITE_HEIGHT * multiplier) / 2;
+            case FPS_POSITION_BOTTOM_RIGHT:
+                if (withText) drawX = (screenWidth / 2) - DEBUG_FPS_LABEL_WIDTH * multiplier - 1.5f * DEBUG_SPRITE_WIDTH * multiplier;
+                else drawX = (screenWidth / 2) - 1.5f * DEBUG_SPRITE_WIDTH * multiplier;
+                drawY = (-screenHeight + DEBUG_SPRITE_HEIGHT * multiplier) / 2;
                 break;
         }
 
@@ -72,36 +70,40 @@ public class FPS {
 
         if (time >= 1f){
             time = 0;
-            lastCount = count;
+
+            if (lastCount != count){
+                lastCount = count;
+                Log.d("FPS", lastCount + "");
+            }
+
             count = 0;
 
-            Log.d("FPS", lastCount + "");
         }
 
         artist.begin(TextureManager.getDebug());
         if (lastCount < 10){
-            artist.draw(drawX, drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[0]);
-            artist.draw(drawX + (SPRITE_WIDTH * multiplier), drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[lastCount]);
+            artist.draw(drawX, drawY, DEBUG_SPRITE_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[0]);
+            artist.draw(drawX + (DEBUG_SPRITE_WIDTH * multiplier), drawY, DEBUG_SPRITE_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[lastCount]);
         } else {
-            artist.draw(drawX, drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[(lastCount - (lastCount % 10)) / 10]);
-            artist.draw(drawX + (SPRITE_WIDTH * multiplier), drawY, SPRITE_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[lastCount % 10]);
+            artist.draw(drawX, drawY, DEBUG_SPRITE_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[(lastCount - (lastCount % 10)) / 10]);
+            artist.draw(drawX + (DEBUG_SPRITE_WIDTH * multiplier), drawY, DEBUG_SPRITE_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[lastCount % 10]);
         }
-        if (withText) artist.draw(drawX + 3f * (SPRITE_WIDTH * multiplier), drawY, TEXT_WIDTH * multiplier, SPRITE_HEIGHT * multiplier, font[11]);
+        if (withText) artist.draw(drawX + 3f * (DEBUG_SPRITE_WIDTH * multiplier), drawY, DEBUG_FPS_LABEL_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[11]);
         artist.end();
     }
 
-    private void loadTexture(){
-        font[0] = new Sprite(TextureManager.getDebug(), 0, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[1] = new Sprite(TextureManager.getDebug(), 5, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[2] = new Sprite(TextureManager.getDebug(), 10, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[3] = new Sprite(TextureManager.getDebug(), 16, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[4] = new Sprite(TextureManager.getDebug(), 22, 0, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[5] = new Sprite(TextureManager.getDebug(), 0, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[6] = new Sprite(TextureManager.getDebug(), 6, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[7] = new Sprite(TextureManager.getDebug(), 12, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[8] = new Sprite(TextureManager.getDebug(), 18, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[9] = new Sprite(TextureManager.getDebug(), 24, 8, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[10] = new Sprite(TextureManager.getDebug(), 0, 24, SPRITE_WIDTH, SPRITE_HEIGHT);
-        font[11] = new Sprite(TextureManager.getDebug(), 0, 16, TEXT_WIDTH, SPRITE_HEIGHT);
+    private void loadSprites(){
+        font[0] = new Sprite(TextureManager.getDebug(), 0, 0, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[1] = new Sprite(TextureManager.getDebug(), 5, 0, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[2] = new Sprite(TextureManager.getDebug(), 10, 0, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[3] = new Sprite(TextureManager.getDebug(), 16, 0, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[4] = new Sprite(TextureManager.getDebug(), 22, 0, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[5] = new Sprite(TextureManager.getDebug(), 0, 8, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[6] = new Sprite(TextureManager.getDebug(), 6, 8, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[7] = new Sprite(TextureManager.getDebug(), 12, 8, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[8] = new Sprite(TextureManager.getDebug(), 18, 8, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[9] = new Sprite(TextureManager.getDebug(), 24, 8, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[10] = new Sprite(TextureManager.getDebug(), 0, 24, DEBUG_SPRITE_WIDTH, DEBUG_SPRITE_HEIGHT);
+        font[11] = new Sprite(TextureManager.getDebug(), 0, 16, DEBUG_FPS_LABEL_WIDTH, DEBUG_SPRITE_HEIGHT);
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.opengl.GLES20;
 
 public class Program {
-    private Shader shader;
+    private final Shader shader;
 
     private int programId;
 

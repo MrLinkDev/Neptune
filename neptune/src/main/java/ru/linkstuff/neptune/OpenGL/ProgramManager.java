@@ -5,6 +5,9 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.linkstuff.neptune.Neptune.SHADER_TYPE_COLOR;
+import static ru.linkstuff.neptune.Neptune.SHADER_TYPE_TEXTURE;
+
 public class ProgramManager {
     public static List<Program> programs;
 
@@ -15,8 +18,8 @@ public class ProgramManager {
     }
 
     private static void createDefaultPrograms(Context context) {
-        programs.add(new Program(context, Shader.SHADER_TYPE_COLOR));
-        programs.add(new Program(context, Shader.SHADER_TYPE_TEXTURE));
+        programs.add(new Program(context, SHADER_TYPE_COLOR));
+        programs.add(new Program(context, SHADER_TYPE_TEXTURE));
     }
 
     public static int createProgram(Context context, int vertexShader, int fragmentShader) {

@@ -4,21 +4,17 @@ import android.content.Context;
 import android.opengl.GLES20;
 
 import ru.linkstuff.neptune.OpenGL.Utils.FileUtils;
-import ru.linkstuff.neptune.R;
 
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
 import static android.opengl.GLES20.GL_VERTEX_SHADER;
+import static ru.linkstuff.neptune.Neptune.DEFAULT_FRAGMENT_COLOR_SHADER;
+import static ru.linkstuff.neptune.Neptune.DEFAULT_FRAGMENT_TEXTURE_SHADER;
+import static ru.linkstuff.neptune.Neptune.DEFAULT_VERTEX_COLOR_SHADER;
+import static ru.linkstuff.neptune.Neptune.DEFAULT_VERTEX_TEXTURE_SHADER;
+import static ru.linkstuff.neptune.Neptune.SHADER_TYPE_COLOR;
+import static ru.linkstuff.neptune.Neptune.SHADER_TYPE_TEXTURE;
 
 public class Shader {
-    public final static int DEFAULT_VERTEX_COLOR_SHADER = R.raw.vertex_color_shader;
-    public final static int DEFAULT_FRAGMENT_COLOR_SHADER = R.raw.fragment_color_shader;
-
-    public final static int DEFAULT_VERTEX_TEXTURE_SHADER = R.raw.vertex_texture_shader;
-    public final static int DEFAULT_FRAGMENT_TEXTURE_SHADER = R.raw.fragment_texture_shader;
-
-    public final static int SHADER_TYPE_COLOR = 0;
-    public final static int SHADER_TYPE_TEXTURE = 1;
-
     private int vertexShaderId;
     private int fragmentShaderId;
 

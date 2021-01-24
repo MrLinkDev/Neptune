@@ -6,6 +6,7 @@ import java.util.List;
 
 import ru.linkstuff.neptune.Framework.Game;
 import ru.linkstuff.neptune.Framework.Input;
+import ru.linkstuff.neptune.Neptune;
 import ru.linkstuff.neptune.OpenGL.Camera;
 import ru.linkstuff.neptune.OpenGL.Debug.FPS;
 import ru.linkstuff.neptune.OpenGL.Debug.Grid;
@@ -22,9 +23,9 @@ public class SceneMenu extends GLScene {
         super(game);
 
         camera = new Camera(width, height);
-        grid = new Grid(0, 0, width, height, 9, 16);
+        grid = new Grid(0, 0, width, height, 11, 18);
 
-        fps = new FPS(width, height, FPS.POSITION_TOP_LEFT, false);
+        fps = new FPS(width, height, Neptune.FPS_POSITION_TOP_LEFT, false);
     }
 
     @Override
@@ -35,11 +36,9 @@ public class SceneMenu extends GLScene {
         for (Input.TouchEvent event : touchEvents){
             if (event.type == Input.TouchEvent.TOUCH_DOWN){
                 pressed = true;
-                //ProgramManager.program(programIndex).use();
             }
 
             if (event.type == Input.TouchEvent.TOUCH_UP){
-                //ProgramManager.defaultTextureProgram().use();
                 pressed = false;
             }
         }
@@ -52,7 +51,6 @@ public class SceneMenu extends GLScene {
         camera.setCamera();
 
         grid.draw();
-
         fps.draw(deltaTime);
     }
 

@@ -1,8 +1,6 @@
 package ru.linkstuff.neptune.OpenGL;
 
-import androidx.annotation.Nullable;
 import ru.linkstuff.neptune.Framework.Math.Vector;
-import ru.linkstuff.neptune.OpenGL.Utils.Color;
 import ru.linkstuff.neptune.OpenGL.Utils.SpriteAttributes;
 
 /**
@@ -60,11 +58,6 @@ public class Artist {
         vertices.setIndices(indices, 0, indices.length);
     }
 
-    public void begin(){
-        numSprites = 0;
-        bufferIndex = 0;
-    }
-
     public void begin(Texture texture){
         texture.bind();
         numSprites = 0;
@@ -77,42 +70,6 @@ public class Artist {
             vertices.bind();
             vertices.draw(numSprites);
         }
-    }
-
-    public void draw(float x, float y, float width, float height, Color color){
-        float halfWidth = width / 2;
-        float halfHeight = height / 2;
-
-        float x1 = x - halfWidth;
-        float y1 = y - halfHeight;
-        float x2 = x + halfWidth;
-        float y2 = y + halfHeight;
-
-        verticesBuffer[bufferIndex++] = x1;
-        verticesBuffer[bufferIndex++] = y1;
-        verticesBuffer[bufferIndex++] = color.r;
-        verticesBuffer[bufferIndex++] = color.g;
-        verticesBuffer[bufferIndex++] = color.b;
-
-        verticesBuffer[bufferIndex++] = x2;
-        verticesBuffer[bufferIndex++] = y1;
-        verticesBuffer[bufferIndex++] = color.r;
-        verticesBuffer[bufferIndex++] = color.g;
-        verticesBuffer[bufferIndex++] = color.b;
-
-        verticesBuffer[bufferIndex++] = x2;
-        verticesBuffer[bufferIndex++] = y2;
-        verticesBuffer[bufferIndex++] = color.r;
-        verticesBuffer[bufferIndex++] = color.g;
-        verticesBuffer[bufferIndex++] = color.b;
-
-        verticesBuffer[bufferIndex++] = x1;
-        verticesBuffer[bufferIndex++] = y2;
-        verticesBuffer[bufferIndex++] = color.r;
-        verticesBuffer[bufferIndex++] = color.g;
-        verticesBuffer[bufferIndex++] = color.b;
-
-        numSprites++;
     }
 
     public void draw(float x, float y, float width, float height, Sprite sprite){
