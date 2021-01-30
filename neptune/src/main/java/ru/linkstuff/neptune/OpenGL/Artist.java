@@ -60,6 +60,14 @@ public class Artist {
 
     public void begin(Texture texture){
         texture.bind();
+
+        numSprites = 0;
+        bufferIndex = 0;
+    }
+
+    public void begin(int slot){
+        TextureManager.bindTexture(slot);
+
         numSprites = 0;
         bufferIndex = 0;
     }

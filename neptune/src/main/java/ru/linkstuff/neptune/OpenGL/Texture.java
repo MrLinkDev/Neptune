@@ -11,6 +11,7 @@ import java.io.InputStream;
 import ru.linkstuff.neptune.Framework.Android.FileIO;
 import ru.linkstuff.neptune.OpenGL.GLActivity;
 
+import static android.opengl.GLES20.GL_TEXTURE0;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 
 public class Texture {
@@ -54,7 +55,7 @@ public class Texture {
 
             GLES20.glPixelStorei(GLES20.GL_UNPACK_ALIGNMENT, 1);
 
-            GLES20.glActiveTexture(slot);
+            GLES20.glActiveTexture(GL_TEXTURE0 + slot);
             GLES20.glBindTexture(GL_TEXTURE_2D, id);
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
 
@@ -70,9 +71,9 @@ public class Texture {
     }
 
     public void bind(){
-        GLES20.glActiveTexture(slot);
+        GLES20.glActiveTexture(GL_TEXTURE0 + slot);
         GLES20.glBindTexture(GL_TEXTURE_2D, id);
-        GLES20.glUniform1i(ProgramManager.defaultTextureProgram().getUTextureUnitLocation(), slot - GLES20.GL_TEXTURE0);
+        GLES20.glUniform1i(ProgramManager.defaultTextureProgram().getUTextureUnitLocation(), slot);
     }
 
     public void reload(GLActivity glActivity){

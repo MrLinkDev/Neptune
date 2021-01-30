@@ -11,21 +11,31 @@ import ru.linkstuff.neptune.OpenGL.Camera;
 import ru.linkstuff.neptune.OpenGL.Debug.FPS;
 import ru.linkstuff.neptune.OpenGL.Debug.Grid;
 import ru.linkstuff.neptune.OpenGL.GLScene;
+import ru.linkstuff.neptune.UI.Utils.Metric;
+import ru.linkstuff.neptune.UI.Widgets.Image;
+
+import static ru.linkstuff.neptune.UI.Utils.Metric.unit;
 
 public class SceneMenu extends GLScene {
     Camera camera;
     Grid grid;
     FPS fps;
 
+    Image image;
+
     boolean pressed = false;
 
     public SceneMenu(Game game) {
         super(game);
 
+        Metric.setUnitSize(18, 32, width, height);
+
         camera = new Camera(width, height);
-        grid = new Grid(0, 0, width, height, 11, 18);
+        grid = new Grid(width, height);
 
         fps = new FPS(width, height, Neptune.FPS_POSITION_TOP_LEFT, false);
+
+        image = new Image(0, 0, unit * 8, unit * 2);
     }
 
     @Override
@@ -52,6 +62,7 @@ public class SceneMenu extends GLScene {
 
         grid.draw();
         fps.draw(deltaTime);
+        image.draw(deltaTime);
     }
 
     @Override

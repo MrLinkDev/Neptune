@@ -15,7 +15,7 @@ public class TextureManager {
     private static int slot = 0;
 
     public static void loadDebugTextures(GLActivity glActivity){
-        textureList.add(new Texture(glActivity, DEBUG_TEXTURE_FILENAME, GLES20.GL_TEXTURE0 + slot));
+        textureList.add(new Texture(glActivity, DEBUG_TEXTURE_FILENAME, slot));
 
         ++slot;
     }
@@ -28,9 +28,13 @@ public class TextureManager {
      */
     public static int loadTexture(GLActivity glActivity, String filename){
         if (slot == MAX_TEXTURE_SLOT) return -1;
-        textureList.add(new Texture(glActivity, filename, GLES20.GL_TEXTURE0 + slot));
+        textureList.add(new Texture(glActivity, filename, slot));
 
         return slot++;
+    }
+
+    public static void bindTexture(int slot){
+        textureList.get(slot).bind();
     }
 
     /**

@@ -1,9 +1,10 @@
 package ru.linkstuff.neptune.OpenGL.Debug;
 
-
 import ru.linkstuff.neptune.OpenGL.Artist;
 import ru.linkstuff.neptune.OpenGL.Sprite;
 import ru.linkstuff.neptune.OpenGL.TextureManager;
+
+import static ru.linkstuff.neptune.UI.Utils.Metric.unit;
 
 public class Grid {
     private final Line[] linesX;
@@ -30,6 +31,23 @@ public class Grid {
             linesY[i] = new Line(x, startY + i * delta, width, 2);
 
         lineSprite = new Sprite(TextureManager.getDebug(), 31, 31, 1, 1);
+        artist = new Artist(linesX.length + linesY.length, Artist.TYPE_TEXTURE);
+    }
+
+    public Grid(int width, int height){
+        float startX = -width / 2;
+        float startY = -height / 2;
+
+        linesX = new Line[(int) (width / unit) + 1];
+        linesY = new Line[(int) (height / unit) + 1];
+
+        for (int i = 0; i < linesX.length; ++i)
+            linesX[i] = new Line(startX + i * unit, 0, 2, height);
+
+        for (int i = 0; i < linesY.length; ++i)
+            linesY[i] = new Line(0, startY + i * unit, width, 2);
+
+        lineSprite = new Sprite(TextureManager.getDebug(), 30, 30, 1, 1);
         artist = new Artist(linesX.length + linesY.length, Artist.TYPE_TEXTURE);
     }
 

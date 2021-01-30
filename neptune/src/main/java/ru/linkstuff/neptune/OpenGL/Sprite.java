@@ -6,6 +6,8 @@ public class Sprite {
 
     public final int width, height;
 
+    private final int textureSlot;
+
     public Sprite(Texture texture, float x, float y, int width, int height){
         this.u1 = x / texture.width;
         this.v1 = y / texture.height;
@@ -14,5 +16,11 @@ public class Sprite {
 
         this.width = width;
         this.height = height;
+
+        textureSlot = texture.slot;
+    }
+
+    public int getTextureSlot() {
+        return textureSlot;
     }
 }
