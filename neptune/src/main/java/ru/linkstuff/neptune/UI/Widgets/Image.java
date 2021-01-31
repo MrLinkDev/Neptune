@@ -24,7 +24,9 @@ public class Image extends Widget {
     }
 
     @Override
-    public void draw(float deltaTime) {
+    public void draw() {
+        if (!visible) return;
+
         artist.begin(image.getTextureSlot());
         artist.draw(x, y, width, height, image);
         artist.end();

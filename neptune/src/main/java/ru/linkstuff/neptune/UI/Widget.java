@@ -21,7 +21,7 @@ public abstract class Widget {
         visible = true;
     }
 
-    public abstract void draw(float deltaTime);
+    public abstract void draw();
 
     public void addX(float dX){
         x += dX;
@@ -75,6 +75,9 @@ public abstract class Widget {
     }
 
     public void setScale(float scale) {
+        width = (width / this.scale) * scale;
+        height = (height / this.scale) * scale;
+
         this.scale = scale;
     }
 

@@ -23,4 +23,15 @@ public class Neptune {
     //Тип шейдера
     public final static int SHADER_TYPE_COLOR = 0;
     public final static int SHADER_TYPE_TEXTURE = 1;
+
+    //Состояние TouchableWidget
+    public final static int STATE_NORMAL = 0;
+    public final static int STATE_PRESSED = 1;
+    public final static int STATE_DISABLED = 2;
+
+    //Состояние Button
+    public static final int BUTTON_NULL = -1;
+    public static final int BUTTON_PRESSED = 0;
+    public static final int BUTTON_CLICKED = 1;
+    public static final int BUTTON_CANCELED = 2;
 }

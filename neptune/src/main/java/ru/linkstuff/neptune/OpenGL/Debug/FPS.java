@@ -64,7 +64,7 @@ public class FPS {
         this.withText = withText;
     }
 
-    public void draw(float deltaTime){
+    public void update(float deltaTime){
         time += deltaTime;
         ++count;
 
@@ -77,9 +77,10 @@ public class FPS {
             }
 
             count = 0;
-
         }
+    }
 
+    public void draw(){
         artist.begin(TextureManager.getDebug());
         if (lastCount < 10){
             artist.draw(drawX, drawY, DEBUG_SPRITE_WIDTH * multiplier, DEBUG_SPRITE_HEIGHT * multiplier, font[0]);

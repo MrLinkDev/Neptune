@@ -1,10 +1,9 @@
 package ru.linkstuff.neptune.OpenGL;
 
-import android.opengl.GLES20;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.linkstuff.neptune.UI.Utils.UIAssets;
 
 public class TextureManager {
     private static final String DEBUG_TEXTURE_FILENAME = "debug.png";

@@ -1,5 +1,7 @@
 package ru.linkstuff.neptune.OpenGL;
 
+import android.opengl.GLES20;
+
 import ru.linkstuff.neptune.Framework.Game;
 import ru.linkstuff.neptune.Framework.Scene;
 
@@ -10,6 +12,8 @@ public class GLScene extends Scene {
     protected final int width;
     protected final int height;
 
+    protected final Camera camera;
+
     public GLScene(Game game) {
         super(game);
 
@@ -18,6 +22,8 @@ public class GLScene extends Scene {
 
         width = glGraphics.getWidth();
         height = glGraphics.getHeight();
+
+        camera = new Camera(width, height);
     }
 
     @Override
@@ -27,7 +33,8 @@ public class GLScene extends Scene {
 
     @Override
     public void present(float deltaTime) {
-
+        GLES20.glClearColor(0f, 0f, 0f, 1);
+        camera.setCamera();
     }
 
     @Override
