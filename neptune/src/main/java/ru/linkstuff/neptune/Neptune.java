@@ -1,6 +1,9 @@
 package ru.linkstuff.neptune;
 
+import ru.linkstuff.neptune.UI.Utils.UIAssets;
+
 public class Neptune {
+
     //Позиция счётчика кадров в секунду
     public static final int FPS_POSITION_TOP_LEFT = 0;
     public static final int FPS_POSITION_TOP_RIGHT = 1;
@@ -34,4 +37,25 @@ public class Neptune {
     public static final int BUTTON_PRESSED = 0;
     public static final int BUTTON_CLICKED = 1;
     public static final int BUTTON_CANCELED = 2;
+
+    //Константы для Button
+    public static final int BUTTON_SPRITE_SIZE = 8;
+    public static final int BUTTON_STATE_DELTA = 1;
+    public static final int BUTTON_BORDER = 6;
+    public static final int BUTTON_FLEXIBLE_SPRITE_COUNT = 9;
+
+    //Типы для Button
+    public static final int BUTTON_TYPE_FIXED = 0;
+    public static final int BUTTON_TYPE_FLEXIBLE = 1;
+    public static final int BUTTON_TYPE_CUSTOM_FIXED = 2;
+    public static final int BUTTON_TYPE_CUSTOM_FLEXIBLE = 3;
+
+    //Изменяемые глобальные переменные
+    public static boolean debug = false;
+
+    public static void setDebug(boolean isDebug){
+        debug = isDebug;
+
+        UIAssets.loadDebugButtonSprites();
+    }
 }

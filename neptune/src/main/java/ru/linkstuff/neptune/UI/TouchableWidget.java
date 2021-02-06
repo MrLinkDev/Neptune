@@ -1,7 +1,6 @@
 package ru.linkstuff.neptune.UI;
 
 import ru.linkstuff.neptune.Framework.Input;
-import ru.linkstuff.neptune.Neptune;
 
 import static ru.linkstuff.neptune.Neptune.STATE_DISABLED;
 import static ru.linkstuff.neptune.Neptune.STATE_NORMAL;
